@@ -1,4 +1,5 @@
 #include <fstream>
+
 using namespace std;
 
 void bmp_write(char * img_data, int width, int height, char * filename){
@@ -36,6 +37,6 @@ int main(int argc, char ** argv){
   char filename[] = "test.bmp";
   int width = 1920, height = 1080;
   double r_min = -3.2, r_max = 3.2, i_min = -1.8, i_max = 1.8;
-  
+
   return 0;
 }
