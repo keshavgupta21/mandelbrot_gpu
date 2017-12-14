@@ -1,5 +1,4 @@
 #include <fstream>
-
 using namespace std;
 
 void bmp_write(char * img_data, int width, int height, char * filename){
