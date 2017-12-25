@@ -124,7 +124,7 @@ void plot_frame_cpu(params plot, char * filename){
 }
 
 int main(int argc, char ** argv){
-  int num_frames = 10;
+  int num_frames = 1000;
   clock_t t1, t2;
   char * filename = (char *)malloc(200*sizeof(char));
   params plot;
