@@ -126,10 +126,10 @@ void plot_frame_cpu(params plot, char * filename){
 int main(int argc, char ** argv){
   int num_frames = 1000;
   clock_t t1, t2;
-  char * filename = (char *)malloc(200*sizeof(char));
+  char filename[20];
   params plot;
 
-  /*TEST GPU*/
+  /*//TEST GPU
   ofstream log_gpu("log_gpu.txt");
   for (int i = 0; i < num_frames; i++){
     sprintf(filename, "anim_gpu/i001%03d.bmp", i);
@@ -143,7 +143,7 @@ int main(int argc, char ** argv){
   }
   log_gpu.close();
 
-  /*TEST CPU
+  //TEST CPU
   ofstream log_cpu("log_cpu.txt");
   for (int i = 0; i < num_frames; i++){
     sprintf(filename, "anim_gpu/i001%03d.bmp", i);
@@ -156,7 +156,5 @@ int main(int argc, char ** argv){
       100*(double)i/(double)num_frames);
   }
   log_cpu.close();*/
-
-  delete[] filename;
   return 0;
 }
