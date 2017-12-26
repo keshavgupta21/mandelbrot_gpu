@@ -1,44 +1,21 @@
 #include <fstream>
-#include <time.h>
 using namespace std;
 
-class params{
-private:
-  double r_min_ini, r_min_trg;
-  double r_max_ini, r_max_trg;
-  double i_min_ini, i_min_trg;
-  double i_max_ini, i_max_trg;
-
+class plot_params{
 public:
-  int width, height;
+  int width, height, max;
   double r_min, r_max, i_min, i_max;
-  int max;
-
-  params(){
-    r_min_trg = -0.160946, r_min_ini = -0.1777;
-    r_max_trg = -0.160642, r_max_ini = -0.1194;
-    i_min_trg = 1.036882, i_min_ini = 1.0138;
-    i_max_trg = 1.037067, i_max_ini = 1.0472;
-
-    width = 1920, height = 1080;
-    r_min = r_min_ini, r_max = r_max_ini, i_min = i_min_ini, i_max = i_max_ini;
-    max = 500;
-  }
-
-  void set_frame_number(int, int);
+  plot_params();
 };
 
-void params::set_frame_number(int n, int max){
-  if (n < max){
-    double t = 1 - pow(0.001, (double)n/(double)max);
-    r_min = r_min_ini +  t*(r_min_trg - r_min_ini);
-    r_max = r_max_ini +  t*(r_max_trg - r_max_ini);
-    i_min = i_min_ini +  t*(i_min_trg - i_min_ini);
-    i_max = i_max_ini +  t*(i_max_trg - i_max_ini);
-  }
-  else{
-    r_min = r_min_trg, r_max = r_max_trg, i_min = i_min_trg, i_max = i_max_trg;
-  }
+plot_params::plot_params(){
+  width = 1920;
+  height = 1080;
+  max = 50;
+  r_min = -3.2;
+  r_max = 3.2;
+  i_min = -1.8;
+  i_max = 1.8;
 }
 
 void bmp_write(char * img_data, int width, int height, char * filename){
@@ -58,8 +35,8 @@ void bmp_write(char * img_data, int width, int height, char * filename){
   bmp.close();
 }
 
-__host__ __device__ double iter(double r_c, double i_c, int max){
-  
+__device__ double iter(double r_c, double i_c, int max){
+
   return 0;
 }
 
@@ -94,22 +71,6 @@ void plot_frame_gpu(params plot, char * filename){
   /*write to file*/
   bmp_write(h_img_data, plot.width, plot.height, filename);
   delete[] h_img_data;
-}
-
-void plot_frame_cpu(params plot, char * filename){
-  char * img_data = new char[plot.width*plot.height*3*sizeof(char)];
-  for (int y = 0; y < plot.height; y++){
-    for (int x = 0; x < plot.width; x++){
-      double r = ((double)x/(double)plot.width)*(plot.r_max-plot.r_min)+plot.r_min;
-      double i = ((double)y/(double)plot.height)*(plot.i_max-plot.i_min)+plot.i_min;
-      double t = iter(r, i, plot.max);
-      img_data[y*3*plot.width + x*3 + 0] = (char)(255*sqrt(t));
-      img_data[y*3*plot.width + x*3 + 1] = (char)(255*t);
-      img_data[y*3*plot.width + x*3 + 2] = (char)(255*t*t);
-    }
-  }
-  bmp_write(img_data, plot.width, plot.height, filename);
-  delete[] img_data;
 }
 
 int main(int argc, char ** argv){
