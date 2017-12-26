@@ -59,18 +59,7 @@ void bmp_write(char * img_data, int width, int height, char * filename){
 }
 
 __host__ __device__ double iter(double r_c, double i_c, int max){
-  double r_t = 0.0, i_t = 0.0;
-  double r_t_2, i_t_2, mag;
-  for (int i = 0; i < max; i++){
-    r_t_2 = r_t * r_t - i_t * i_t;
-    i_t_2 = 2 * r_t * i_t;
-    r_t = r_t_2 + r_c;
-    i_t = i_t_2 + i_c;
-    mag = r_t*r_t + i_t*i_t;
-    if (mag > 4){
-      return (double)(i + 1 - log(log(mag))/log(2.0))/(double)max;
-    }
-  }
+  
   return 0;
 }
 
@@ -124,37 +113,8 @@ void plot_frame_cpu(params plot, char * filename){
 }
 
 int main(int argc, char ** argv){
-  int num_frames = 1000;
-  clock_t t1, t2;
-  char filename[20];
+  char filename[20] = "test.bmp";
   params plot;
 
-  /*//TEST GPU
-  ofstream log_gpu("log_gpu.txt");
-  for (int i = 0; i < num_frames; i++){
-    sprintf(filename, "anim_gpu/i001%03d.bmp", i);
-    plot.set_frame_number(i, num_frames);
-    t1 = clock();
-    plot_frame_gpu(plot, filename);
-    t2 = clock();
-    log_gpu << 1000*(double)(t2-t1)/(CLOCKS_PER_SEC) << "\n";
-    if (!(i%(num_frames/100)) && (argc-1)) printf("Done %2.2f%% on GPU.\n",
-      100*(double)i/(double)num_frames);
-  }
-  log_gpu.close();
-
-  //TEST CPU
-  ofstream log_cpu("log_cpu.txt");
-  for (int i = 0; i < num_frames; i++){
-    sprintf(filename, "anim_gpu/i001%03d.bmp", i);
-    plot.set_frame_number(i, num_frames);
-    t1 = clock();
-    plot_frame_cpu(plot, filename);
-    t2 = clock();
-    log_cpu << 1000*(double)(t2-t1)/(CLOCKS_PER_SEC) << "\n";
-    if (!(i%(num_frames/100)) && (argc-1)) printf("Done %2.2f%% on CPU.\n",
-      100*(double)i/(double)num_frames);
-  }
-  log_cpu.close();*/
   return 0;
 }
