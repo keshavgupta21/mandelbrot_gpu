@@ -5,6 +5,7 @@ class plot_params{
 public:
   int width, height, max;
   double r_min, r_max, i_min, i_max;
+  double epsilon;
   plot_params();
 };
 
@@ -16,6 +17,8 @@ plot_params::plot_params(){
   r_max = 3.2;
   i_min = -1.8;
   i_max = 1.8;
+  epsilon = 1e-6;
+  
 }
 
 void bmp_write(char * img_data, int width, int height, char * filename){
