@@ -137,7 +137,7 @@ int main(int argc, char ** argv){
     t1 = clock();
     plot_frame_gpu(plot, filename);
     t2 = clock();
-    //log_gpu << 1000*(double)(t2-t1)/(CLOCKS_PER_SEC) << "\n";
+    log_gpu << 1000*(double)(t2-t1)/(CLOCKS_PER_SEC) << "\n";
     if (!(i%(num_frames/100)) && (argc-1)) printf("Done %2.2f%% on GPU.\n",
       100*(double)i/(double)num_frames);
   }
@@ -151,7 +151,7 @@ int main(int argc, char ** argv){
     t1 = clock();
     plot_frame_cpu(plot, filename);
     t2 = clock();
-    //log_cpu << 1000*(double)(t2-t1)/(CLOCKS_PER_SEC) << "\n";
+    log_cpu << 1000*(double)(t2-t1)/(CLOCKS_PER_SEC) << "\n";
     if (!(i%(num_frames/100)) && (argc-1)) printf("Done %2.2f%% on CPU.\n",
       100*(double)i/(double)num_frames);
   }
