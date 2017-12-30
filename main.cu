@@ -18,7 +18,6 @@ plot_params::plot_params(){
   i_min = -1.8;
   i_max = 1.8;
   epsilon = 1e-6;
-
 }
 
 void bmp_write(char * img_data, int width, int height, char * filename){
@@ -74,12 +73,11 @@ void plot_frame_gpu(params plot, char * filename){
   /*write to file*/
   bmp_write(h_img_data, plot.width, plot.height, filename);
   delete[] h_img_data;
-  //change #1
 }
 
 int main(int argc, char ** argv){
   char filename[20] = "test.bmp";
   params plot;
-
+  plot_frame_gpu(plot)
   return 0;
 }
