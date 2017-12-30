@@ -15,14 +15,14 @@ public:
   int max;
 
   params(){
-    r_min_trg = -0.160946, r_min_ini = -0.1777;
-    r_max_trg = -0.160642, r_max_ini = -0.1194;
-    i_min_trg = 1.036882, i_min_ini = 1.0138;
-    i_max_trg = 1.037067, i_max_ini = 1.0472;
+    r_min_ini = -2.86, r_min_trg = -0.1777;
+    r_max_ini = 1.86, r_max_trg = -0.1194;
+    i_min_ini = -1.33, i_min_trg = 1.0138;
+    i_max_ini = 1.33, i_max_trg = 1.0472;
 
     width = 1920, height = 1080;
     r_min = r_min_ini, r_max = r_max_ini, i_min = i_min_ini, i_max = i_max_ini;
-    max = 500;
+    max = 50;
   }
 
   void set_frame_number(int, int);
