@@ -143,7 +143,7 @@ int main(int argc, char ** argv){
   }
   log_gpu.close();
 
-  TEST CPU
+  /*TEST CPU*/
   ofstream log_cpu("/media/keshav/Keshav/Dropbox (MIT)/anim_cpu/log_cpu.txt");
   for (int i = 0; i < num_frames; i++){
     sprintf(filename, "/media/keshav/Keshav/Dropbox (MIT)/anim_cpu/i0001%02d.bmp", i);
