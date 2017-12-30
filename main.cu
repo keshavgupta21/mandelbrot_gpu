@@ -94,8 +94,8 @@ void plot_frame_gpu(params plot, char * filename){
   char * d_img_data;
   cudaMalloc((void **) &d_img_data, plot.width*plot.height*3*sizeof(char));
   dim3 threads(32, 32, 1);
-  dim3 grid(ceil((double)plot.width/(double)threads.x),
-    ceil((double)plot.height/(double)threads.y), 1);
+  dim3 grid(ceil((double)plot.width/32.0),
+    ceil((double)plot.height/32.0), 1);
   populate<<<grid, threads>>>(d_img_data, plot.r_min, plot.r_max, plot.i_min,
     plot.i_max, plot.width, plot.height, plot.max);
   cudaMemcpy(h_img_data, d_img_data, plot.width*plot.height*3*sizeof(char),
@@ -132,7 +132,7 @@ int main(int argc, char ** argv){
   /*TEST GPU*/
   ofstream log_gpu("/media/keshav/Keshav/Dropbox (MIT)/anim_gpu/log_gpu.txt");
   for (int i = 0; i < num_frames; i++){
-    sprintf(filename, "/media/keshav/Keshav/Dropbox (MIT)/anim_gpu/i0001%02d.bmp", i);
+    sprintf(filename, "/media/keshav/Keshav/Dropbox (MIT)/anim_gpu/i%03d.bmp", i);
     plot.set_frame_number(i, num_frames);
     t1 = clock();
     plot_frame_gpu(plot, filename);
@@ -146,7 +146,7 @@ int main(int argc, char ** argv){
   /*TEST CPU*/
   ofstream log_cpu("/media/keshav/Keshav/Dropbox (MIT)/anim_cpu/log_cpu.txt");
   for (int i = 0; i < num_frames; i++){
-    sprintf(filename, "/media/keshav/Keshav/Dropbox (MIT)/anim_cpu/i0001%02d.bmp", i);
+    sprintf(filename, "/media/keshav/Keshav/Dropbox (MIT)/anim_cpu/i%03d.bmp", i);
     plot.set_frame_number(i, num_frames);
     t1 = clock();
     plot_frame_cpu(plot, filename);
