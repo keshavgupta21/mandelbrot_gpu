@@ -130,9 +130,9 @@ int main(int argc, char ** argv){
   params plot;
 
   /*TEST GPU*/
-  ofstream log_gpu("/media/keshav/Keshav/Dropbox (MIT)/anim_gpu/log_gpu.txt");
+  ofstream log_gpu("/home/keshav/Dropbox (MIT)/anim_gpu/log_gpu.txt");
   for (int i = 0; i < num_frames; i++){
-    sprintf(filename, "/media/keshav/Keshav/Dropbox (MIT)/anim_gpu/i%03d.bmp", i);
+    sprintf(filename, "/home/keshav/Dropbox (MIT)/anim_gpu/i%03d.bmp", i);
     plot.set_frame_number(i, num_frames);
     t1 = clock();
     plot_frame_gpu(plot, filename);
@@ -142,20 +142,6 @@ int main(int argc, char ** argv){
       100*(double)i/(double)num_frames);
   }
   log_gpu.close();
-
-  /*TEST CPU*/
-  ofstream log_cpu("/media/keshav/Keshav/Dropbox (MIT)/anim_cpu/log_cpu.txt");
-  for (int i = 0; i < num_frames; i++){
-    sprintf(filename, "/media/keshav/Keshav/Dropbox (MIT)/anim_cpu/i%03d.bmp", i);
-    plot.set_frame_number(i, num_frames);
-    t1 = clock();
-    plot_frame_cpu(plot, filename);
-    t2 = clock();
-    log_cpu << 1000*(double)(t2-t1)/(CLOCKS_PER_SEC) << "\n";
-    if (!(i%(num_frames/100)) && (argc-1)) printf("Done %2.2f%% on CPU.\n",
-      100*(double)i/(double)num_frames);
-  }
-  log_cpu.close();
 
   delete[] filename;
   return 0;
