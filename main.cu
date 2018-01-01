@@ -124,11 +124,8 @@ void plot_frame_cpu(params plot, char * filename){
 }
 
 int main(int argc, char ** argv){
-  int num_frames = 10;
-  clock_t t1, t2;
   char filename[] = "test.bmp";
   params plot;
   plot_frame_gpu(plot, filename);
-  delete[] filename;
   return 0;
 }

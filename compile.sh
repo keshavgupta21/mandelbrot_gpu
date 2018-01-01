@@ -1,3 +1,3 @@
 git pull
-nvcc main.cu -O3 -o main_xub
+nvcc main.cu -O3 -o main.out
 ./main.out v
