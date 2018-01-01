@@ -1,5 +1,4 @@
 #include <fstream>
-#include <time.h>
 using namespace std;
 
 class params{
@@ -124,25 +123,7 @@ void plot_frame_cpu(params plot, char * filename){
 }
 
 int main(int argc, char ** argv){
-  int num_frames = 1000;
-  clock_t t1, t2;
-  char * filename = (char *)malloc(200*sizeof(char));
   params plot;
-
-  /*TEST GPU*/
-  ofstream log_gpu("/home/keshav/Dropbox (MIT)/anim_gpu/log_gpu.txt");
-  for (int i = 0; i < num_frames; i++){
-    sprintf(filename, "/home/keshav/Dropbox (MIT)/anim_gpu/i%03d.bmp", i);
-    plot.set_frame_number(i, num_frames);
-    t1 = clock();
-    plot_frame_gpu(plot, filename);
-    t2 = clock();
-    log_gpu << 1000*(double)(t2-t1)/(CLOCKS_PER_SEC) << "\n";
-    if (!(i%(num_frames/100)) && (argc-1)) printf("Done %2.2f%% on GPU.\n",
-      100*(double)i/(double)num_frames);
-  }
-  log_gpu.close();
-
-  delete[] filename;
+  plot_frame_cpu(plot, "test.bmp");
   return 0;
 }
