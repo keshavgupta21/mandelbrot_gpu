@@ -143,6 +143,20 @@ int main(int argc, char ** argv){
   }
   log_gpu.close();
 
+  /*TEST CPU*/
+  ofstream log_cpu("/home/keshav/Dropbox (MIT)/anim_cpu/log_cpu.txt");
+  for (int i = 0; i < num_frames; i++){
+    sprintf(filename, "/home/keshav/Dropbox (MIT)/anim_cpu/i%03d.bmp", i);
+    plot.set_frame_number(i, num_frames);
+    t1 = clock();
+    plot_frame_cpu(plot, filename);
+    t2 = clock();
+    log_cpu << 1000*(double)(t2-t1)/(CLOCKS_PER_SEC) << "\n";
+    if (!(i%(num_frames/100)) && (argc-1)) printf("Done %2.2f%% on CPU.\n",
+      100*(double)i/(double)num_frames);
+  }
+  log_cpu.close();
+
   delete[] filename;
   return 0;
 }
