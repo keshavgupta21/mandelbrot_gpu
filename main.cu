@@ -124,6 +124,6 @@ void plot_frame_cpu(params plot, char * filename){
 
 int main(int argc, char ** argv){
   params plot;
-  plot_frame_cpu(plot, "test.bmp");
+  plot_frame_gpu(plot, "test.bmp");
   return 0;
 }
