@@ -81,9 +81,9 @@ __global__ void populate(char * d_img_data, double r_min, double r_max,
       double r = ((double)x/(double)width)*(r_max-r_min)+r_min;
       double i = ((double)y/(double)height)*(i_max-i_min)+i_min;
       double t = iter(r, i, max);
-      d_img_data[y*3*width + x*3 + 0] = (char)(255*sqrt(t));
-      d_img_data[y*3*width + x*3 + 1] = (char)(255*t);
-      d_img_data[y*3*width + x*3 + 2] = (char)(255*t*t);
+      d_img_data[y*3*width + x*3 + 0] = (char)(0);
+      d_img_data[y*3*width + x*3 + 1] = (char)(0);
+      d_img_data[y*3*width + x*3 + 2] = (char)(255*t);
     }
   }
 
