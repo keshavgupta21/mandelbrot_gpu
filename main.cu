@@ -93,8 +93,7 @@ void plot_frame_gpu(params plot, char * filename){
   char * d_img_data;
   cudaMalloc((void **) &d_img_data, plot.width*plot.height*3*sizeof(char));
   dim3 threads(32, 32, 1);
-  dim3 grid(ceil((double)plot.width/32.0),
-    ceil((double)plot.height/32.0), 1);
+  dim3 grid(plot.width/32 + 1, plot.height/32 + 1, 1);
   populate<<<grid, threads>>>(d_img_data, plot.r_min, plot.r_max, plot.i_min,
     plot.i_max, plot.width, plot.height, plot.max);
   cudaMemcpy(h_img_data, d_img_data, plot.width*plot.height*3*sizeof(char),
