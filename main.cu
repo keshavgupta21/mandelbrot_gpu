@@ -116,9 +116,9 @@ void plot_frame_cpu(params plot, char * filename){
       double r = ((double)x/(double)plot.width)*(plot.r_max-plot.r_min)+plot.r_min;
       double i = ((double)y/(double)plot.height)*(plot.i_max-plot.i_min)+plot.i_min;
       double t = iter(r, i, plot.max);
-      img_data[y*3*plot.width + x*3 + 0] = (char)(255*sqrt(t));
-      img_data[y*3*plot.width + x*3 + 1] = (char)(255*t);
-      img_data[y*3*plot.width + x*3 + 2] = (char)(255*t*t);
+      img_data[y*3*plot.width + x*3 + 0] = (char)(255*t);
+      img_data[y*3*plot.width + x*3 + 1] = (char)(0);
+      img_data[y*3*plot.width + x*3 + 2] = (char)(0);
     }
   }
   bmp_write(img_data, plot.width, plot.height, filename);
