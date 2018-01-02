@@ -92,14 +92,17 @@ void plot_frame_gpu(params plot, char * filename){
   ofstream errlog("errlog.txt");
   char * h_img_data = new char[plot.width*plot.height*3*sizeof(char)];
   char * d_img_data;
-  errlog << cudaMalloc((void **) &d_img_data, plot.width*plot.height*3*sizeof(char)) << endl;
+  cudaMalloc((void **) &d_img_data, plot.width*plot.height*3*sizeof(char));
+  errlog << cudaGetErrorString(cudaGetLastError());
   dim3 threads(32, 32, 1);
   dim3 grid(plot.width/32 + 1, plot.height/32 + 1, 1);
   populate<<<grid, threads>>>(d_img_data, plot.r_min, plot.r_max, plot.i_min,
     plot.i_max, plot.width, plot.height, plot.max);
-  errlog << cudaMemcpy(h_img_data, d_img_data, plot.width*plot.height*3*sizeof(char),
-    cudaMemcpyDeviceToHost) << endl;
-  errlog << cudaFree(d_img_data) << endl;
+  cudaMemcpy(h_img_data, d_img_data, plot.width*plot.height*3*sizeof(char),
+    cudaMemcpyDeviceToHost);
+  errlog << cudaGetErrorString(cudaGetLastError());
+  cudaFree(d_img_data);
+  errlog << cudaGetErrorString(cudaGetLastError());
   errlog.close();
   /*write to file*/
   bmp_write(h_img_data, plot.width, plot.height, filename);
