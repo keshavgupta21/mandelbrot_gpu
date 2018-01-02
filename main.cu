@@ -100,7 +100,7 @@ void plot_frame_gpu(params plot, char * filename){
   errlog << cudaMemcpy(h_img_data, d_img_data, plot.width*plot.height*3*sizeof(char),
     cudaMemcpyDeviceToHost) << endl;
   errlog << cudaFree(d_img_data) << endl;
-
+  errlog.close();
   /*write to file*/
   bmp_write(h_img_data, plot.width, plot.height, filename);
   delete[] h_img_data;
