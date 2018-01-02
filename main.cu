@@ -88,41 +88,18 @@ __global__ void populate(char * d_img_data, double r_min, double r_max,
   }
 
 void plot_frame_gpu(params plot, char * filename){
-  /*getting image data*/
-  ofstream errlog("errlog.txt");
   char * h_img_data = new char[plot.width*plot.height*3*sizeof(char)];
   char * d_img_data;
   cudaMalloc((void **) &d_img_data, plot.width*plot.height*3*sizeof(char));
-  errlog << cudaGetErrorString(cudaGetLastError());
   dim3 threads(32, 32, 1);
   dim3 grid(plot.width/32 + 1, plot.height/32 + 1, 1);
   populate<<<grid, threads>>>(d_img_data, plot.r_min, plot.r_max, plot.i_min,
     plot.i_max, plot.width, plot.height, plot.max);
   cudaMemcpy(h_img_data, d_img_data, plot.width*plot.height*3*sizeof(char),
     cudaMemcpyDeviceToHost);
-  errlog << cudaGetErrorString(cudaGetLastError());
   cudaFree(d_img_data);
-  errlog << cudaGetErrorString(cudaGetLastError());
-  errlog.close();
-  /*write to file*/
   bmp_write(h_img_data, plot.width, plot.height, filename);
   delete[] h_img_data;
-}
-
-void plot_frame_cpu(params plot, char * filename){
-  char * img_data = new char[plot.width*plot.height*3*sizeof(char)];
-  for (int y = 0; y < plot.height; y++){
-    for (int x = 0; x < plot.width; x++){
-      double r = ((double)x/(double)plot.width)*(plot.r_max-plot.r_min)+plot.r_min;
-      double i = ((double)y/(double)plot.height)*(plot.i_max-plot.i_min)+plot.i_min;
-      double t = iter(r, i, plot.max);
-      img_data[y*3*plot.width + x*3 + 0] = (char)(255*t);
-      img_data[y*3*plot.width + x*3 + 1] = (char)(0);
-      img_data[y*3*plot.width + x*3 + 2] = (char)(0);
-    }
-  }
-  bmp_write(img_data, plot.width, plot.height, filename);
-  delete[] img_data;
 }
 
 int main(int argc, char ** argv){
