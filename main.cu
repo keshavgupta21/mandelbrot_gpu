@@ -104,6 +104,6 @@ void plot_frame_gpu(params plot, char * filename){
 
 int main(int argc, char ** argv){
   params plot;
-  plot_frame_gpu(plot, "test1.bmp");
+  plot_frame_gpu(plot, "test2.bmp");
   return 0;
 }
